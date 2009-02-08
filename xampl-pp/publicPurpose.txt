@@ -1,0 +1,7 @@
+
+Implementations of an XML pull parser in several programming languages
+including Ruby and SmallEiffel.
+
+Pull parsers are streaming XML parsers that have very simple and easy
+to use APIs and yet provide excellent performance.
+

@@ -1,0 +1,9 @@
+
+-- handle text better. It is now reading everything into a buffer.
+    i) stream it
+		ii) skip without buffering if never asked for by client
+
+-- make the attributes array a hash. index by {ns}attrname. no namespace
+   indexed as {}attrname. Make sure error raised for duplicate attrnames.
+
+-- complete the oasis test suite stuff

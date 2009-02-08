@@ -1,0 +1,24 @@
+
+Version 0.0 of the xampl-pp XML pull parser is available
+on SourceForge.  The project page for xampl-pp is:
+http://sourceforge.net/projects/xampl-pp/
+
+This package includes a native Ruby implementation of an XML pull parser, and a SAX-like parser as a demonstration.
+
+Pull parsers are streaming parsers parsers, they do not build an in-memory representation of the XML document being parsed, nor do they require the entire document to be parsed before generating events. In this way pull parsers are similar to SAX parsers.  The significant difference between pull parsers and SAX parsers is in where the 'main loop' is located: in the client for pull parsers, in the parser for SAX parsers. Clients call a method of the pull parser to get the next event. SAX parsers call methods of the client to notify it of events (so these are 'push parsers').
+
+The performance of xampl-pp is quite good.
+
+Xampl-pp is not a validating parser, in fact, in this release it doesn't enforce all wellformedness rules (part of the point of xampl-pp is to process pieces of XML files).  No attempt is made to extract any kind of entity definitions from the DOCTYPE, though they are passed intact to the client program.
+
+As a way of illustrating the use of xampl-pp a reasonably usable SAX-like parser (SAXish) is implemented. There is a saxdemo.rb that provides statistics on the parsed XML file using the SAXish API. It can be run using 'make sax' (look in the Makefile to see how it is used)
+
+Though Xampl-pp has been used in several projects already, this is something of an adventurer's release. For example, there is no installer provided (that will be coming very soon, but I thought it safer to keep away from that for now), and documentation is sparse.
+
+Xampl-pp has passed all unit tests using Ruby 1.6.7 on Linux and OS X, and Ruby 1.7.2 on Mac OS X. It's not been tried on any other combinations so far.
+
+I hope you find this parser to be of use.
+
+Enjoy!
+
+Bob
