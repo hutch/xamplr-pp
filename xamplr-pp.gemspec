@@ -17,6 +17,8 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION.yml",
+    "lib/xampl-pp-dtd.rb",
+    "lib/xampl-pp-wf.rb",
     "lib/xamplr-pp.rb",
     "lib/xamplr-pp/ANNOUNCE.TXT",
     "lib/xamplr-pp/LICENSE",
@@ -30,14 +32,10 @@ Gem::Specification.new do |s|
     "lib/xamplr-pp/toys/chew.rb",
     "lib/xamplr-pp/toys/chewMultibyte.rb",
     "lib/xamplr-pp/toys/dump.rb",
-    "lib/xamplr-pp/xampl-pp-dtd.rb",
-    "lib/xamplr-pp/xampl-pp-wf.rb",
-    "lib/xamplr-pp/xampl-pp.rb",
     "lib/xamplr-pp/xmlName.defn",
     "lib/xamplr-pp/xpp.rb",
     "lib/xamplr-pp/xppDeluxe.rb",
     "lib/xamplr-pp/xppIter.rb",
-    "lib/xamplr_pp_gem.rb",
     "test/test_helper.rb",
     "test/xamplr_pp_gem_test.rb"
   ]
