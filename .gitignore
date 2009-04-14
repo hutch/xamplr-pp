@@ -1,2 +1,7 @@
 junk*
 tmp
+*.sw?
+.DS_Store
+coverage
+rdoc
+pkg
