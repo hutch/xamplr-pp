@@ -32,54 +32,59 @@ class Xampl_PP
   DOCTYPE = 'DOCTYPE'
   UNDECIDED_TYPE = 'UNDECIDED_TYPE'
 
+  def first_byte(str)
+    str.bytes.first
+  end
+
   # 'Features', acutally just processing options
-  attr :processNamespace, true
-  attr :reportNamespaceAttributes, true
-  attr :utf8encode, true
+  attr_accessor  :processNamespace #1.9.1 , true
+  attr_accessor  :reportNamespaceAttributes #1.9.1 , true
+  attr_accessor  :utf8encode #1.9.1 , true
 
   # the entities that we will recognise
-  attr :entityMap, true
-  attr :unresolvedEntity
-  attr :resolver, true
+  attr_accessor  :entityMap #1.9.1 , true
+  attr_accessor  :unresolvedEntity
+  attr_accessor  :resolver #1.9.1 , true
 
   # some information about where we are
-  attr :line
-  attr :column
+  attr_accessor  :line
+  attr_accessor  :column
 
   # element information
-  attr :type
-  attr :emptyElement
-  attr :name
-  attr :qname
-  attr :namespace
-  attr :prefix
-  attr :attributeName
-  attr :attributeQName
-  attr :attributeNamespace
-  attr :attributePrefix
-  attr :attributeValue
+  attr_accessor  :type
+  attr_accessor  :emptyElement
+  attr_accessor  :name
+  attr_accessor  :qname
+  attr_accessor  :namespace
+  attr_accessor  :prefix
+  attr_accessor  :attributeName
+  attr_accessor  :attributeQName
+  attr_accessor  :attributeNamespace
+  attr_accessor  :attributePrefix
+  attr_accessor  :attributeValue
 
-  attr :text
+  attr_accessor  :text
 
   # These are not intended for general use (they are not part of the api)
 
   # open element information
-  attr :elementName
-  attr :elementQName
-  attr :elementNamespace
-  attr :elementPrefix
+  attr_accessor  :elementName
+  attr_accessor  :elementQName
+  attr_accessor  :elementNamespace
+  attr_accessor  :elementPrefix
 
   # some pre-compiled patterns
-  attr :namePattern, true
-  attr :skipWhitespacePattern, true
+  attr_accessor  :namePattern #1.9.1 , true
+  attr_accessor  :skipWhitespacePattern #1.9.1 , true
 
-  attr :elementNamespacePrefixStack
-  attr :elementNamespaceValueStack
-  attr :elementNamespaceDefaultStack
+  attr_accessor  :elementNamespacePrefixStack
+  attr_accessor  :elementNamespaceValueStack
+  attr_accessor  :elementNamespaceDefaultStack
 
-	attr :standalone
+  attr_accessor  :standalone
 
-public
+  public
+
   def startDocument?
     @type.equal? START_DOCUMENT
   end
@@ -128,18 +133,18 @@ public
     @type.equal? DOCTYPE
   end
 
-	def resolve(name)
-		raise sprintf("unresolved entity '%s'", name)
-	end
+  def resolve(name)
+    raise sprintf("unresolved entity '%s'", name)
+  end
 
   def input=(v)
-		setInput(v)
-	end
+    setInput(v)
+  end
 
   def setInput(v)
-		if (defined? @input) and (nil != @input) then
-			@input.close
-		end
+    if (defined? @input) and (nil != @input) then
+      @input.close
+    end
     if nil == v then
       @input = nil
       @inputBuffer = nil
@@ -187,7 +192,7 @@ public
 
     @emptyElement = false
 
-		@errorMessage = nil
+    @errorMessage = nil
 
     initInput
   end
@@ -198,18 +203,18 @@ public
 
   def nextEvent
     begin
-     	@type = END_DOCUMENT
-     	if (nil == @inputBuffer) and (nil == @input) then
-       	return @type
-     	end
+      @type = END_DOCUMENT
+      if (nil == @inputBuffer) and (nil == @input) then
+        return @type
+      end
 
-     	@unresolvedEntity = false
+      @unresolvedEntity = false
 
-     	@text = nil
+      @text = nil
 
-     	parseNextEvent
+      parseNextEvent
 
-     	return @type
+      return @type
     rescue Exception => message
       print message.backtrace.join("\n")
       if nil != @inputBuffer then
@@ -227,11 +232,12 @@ public
     end
   end
 
-	def depth
-		return @elementName.length
-	end
+  def depth
+    return @elementName.length
+  end
 
-private
+  private
+
   def initialize
     self.processNamespace = true
     self.reportNamespaceAttributes = false
@@ -247,7 +253,7 @@ private
     self.namePattern = /[^0-9\x00-\x20=\/>\`\.\-\~\!\@\#\$\%\^\&\*\(\)\+\=\]\[\{\}\\\|\;\'\"\,\<\>\/\?][^\x00-\x20=\/>\`\!\@\#\$\%\^\&\*\(\)\+\=\]\[\{\}\\\|\;\'\"\,\<\>\/\?]*/u
     self.skipWhitespacePattern = /[^\n\r\t ]+/u
 
-		#pre ruby 1.8 needs the Regex.new syntax
+    #pre ruby 1.8 needs the Regex.new syntax
     #self.namePattern = Regexp.new(/[^0-9\x00-\x20=\/>\`\.\-\~\!\@\#\$\%\^\&\*\(\)\+\=\]\[\{\}\\\|\;\'\"\,\<\>\/\?][^\x00-\x20=\/>\`\!\@\#\$\%\^\&\*\(\)\+\=\]\[\{\}\\\|\;\'\"\,\<\>\/\?]*/, nil, 'u')
     #old junk... self.skipWhitespacePattern = Regexp.new(/[^\n\r\t ]+|\x00/, nil, 'u')
     #self.skipWhitespacePattern = Regexp.new(/[^\n\r\t ]+/, nil, 'u')
@@ -264,6 +270,7 @@ private
     @inputBuffer = @nextInputBuffer
     if nil == @inputBuffer then
       @inputBuffer = @input.gets
+      #puts "#{ __FILE__ }:#{ __LINE__ } MORE INPUT: #{ @inputBuffer }"
       @column = 0
       if nil == @inputBuffer then
         @inputBufferLength = -1
@@ -272,6 +279,7 @@ private
     end
     @inputBufferLength = @inputBuffer.length
     @nextInputBuffer = @input.gets
+    #puts "#{ __FILE__ }:#{ __LINE__ } NEXT INPUT: #{ @nextInputBuffer }"
   end
 
   def expectold(e)
@@ -286,17 +294,27 @@ private
   def expect(e)
     if (nil == @inputBuffer) or (@inputBufferLength <= @column) then
       getMoreInput
-			if nil == @inputBuffer then
-    		msg = sprintf("unexpectedChar:: expect '%s' got EOF in %s", (''<<e), caller[0])
-    		raise msg
-			end
+      if nil == @inputBuffer then
+        msg = sprintf("unexpectedChar:: expect '%s' got EOF in %s", (''<<e), caller[0])
+        raise msg
+      end
     end
 
     c = @inputBuffer[@column]
+    if c.instance_of?(String) then
+      c = c.bytes.first
+    end
+    if e.instance_of?(String) then
+      e = e.bytes.first
+    end
     @column += 1
-   	if c == e then
-			return c
-		end
+    if c == e then
+      return c
+    end
+
+    #puts "#{ __FILE__ }:#{ __LINE__ } EXPECT CLASS: #{ e.class.name }"
+    #puts "#{ __FILE__ }:#{ __LINE__ } GOT    CLASS: #{ c.class.name }"
+
 
     msg = sprintf("unexpectedChar:: expect '%s' got '%s' in %s", (''<<e), (''<<c), caller[0])
     raise msg
@@ -305,12 +323,14 @@ private
   def read
     if (nil == @inputBuffer) or (@inputBufferLength <= @column) then
       getMoreInput
-			if nil == @inputBuffer then
-				return nil
-			end
+      if nil == @inputBuffer then
+        return nil
+      end
     end
 
-    c = @inputBuffer[@column]
+    #puts "#{ __FILE__ }:#{ __LINE__ } READ COLUMN #{ @column } FROM: #{ @inputBuffer }"
+    #puts "#{ __FILE__ }:#{ __LINE__ } READ: #{  @inputBuffer[@column] }"
+    c = @inputBuffer[@column].bytes.first # 1.9.1 fixup
     @column += 1
     return c
   end
@@ -412,11 +432,11 @@ private
     @textBuffer = ''
 
     c = read
-    if ?? == c then
+    if first_byte("?") == c then
       result = PROCESSING_INSTRUCTION
       demand = nil
       delimiter = ??
-    elsif ?! == c then
+    elsif first_byte("!") == c then
       cc = peekAt0
       if ?- == cc then
         result = COMMENT
@@ -438,8 +458,7 @@ private
     end
 
     if nil != demand then
-      demand.each_byte do
-        | d |
+      demand.each_byte do | d |
         expect d
       end
     end
@@ -465,20 +484,20 @@ private
     return result
   end
 
-	def parseXMLDecl
-		return nil != @text.index(/^xml/u)
-	end
+  def parseXMLDecl
+    return nil != @text.index(/^xml/u)
+  end
 
   def parseDoctype
     depth = 1
     quoted = false
     delimiter = nil
     entityDefinitionText = ''
-		havePiece = false
-		internalSubset = false
+    havePiece = false
+    internalSubset = false
 
     @text = ''
-    
+
     while true do
       c = read
       case c
@@ -522,31 +541,31 @@ private
           if not quoted then
             depth -= 1
             #check right here for an entity definition!!!
-						havePiece = true
+            havePiece = true
             #entityDefinitionText = ''
             if 0 == depth then
               return
             end
           end
-				when ?[
+        when ?[
           if not quoted then
-						internalSubset = true
-					end
+            internalSubset = true
+          end
         when nil
           raise sprintf("unexpected EOF in DOCTYPE (depth: %d, quoted: %s)", depth, quoted)
       end
       @text << c
       entityDefinitionText << c
-			if havePiece then
-				parseDefinition(entityDefinitionText, internalSubset)
-      	entityDefinitionText = ''
-			end
-			havePiece = false
+      if havePiece then
+        parseDefinition(entityDefinitionText, internalSubset)
+        entityDefinitionText = ''
+      end
+      havePiece = false
     end
   end
 
-	def parseDefinition(defn, internal)
-	end
+  def parseDefinition(defn, internal)
+  end
 
   def peekType
     c = peekAt0
@@ -590,18 +609,18 @@ private
 #      end
       if c < 0x80 then
         @textBuffer << c
-       elsif c < 0x0800
-         @textBuffer << ((c >> 6) | 0xC0)
-         @textBuffer << ((c & 0x3F) | 0x80)
-       elsif c < 0x10000
-         @textBuffer << ((c >> 12) | 0xE0)
-         @textBuffer << (((c >> 6) & 0x3F) | 0x80)
-         @textBuffer << ((c & 0x3F) | 0x80)
-       else
-         @textBuffer << ((c >> 18) | 0xF0)
-         @textBuffer << (((c >> 12) & 0x3F) | 0x80)
-         @textBuffer << (((c >> 6) & 0x3F) | 0x80)
-         @textBuffer << ((c & 0x3F) | 0x80)
+      elsif c < 0x0800
+        @textBuffer << ((c >> 6) | 0xC0)
+        @textBuffer << ((c & 0x3F) | 0x80)
+      elsif c < 0x10000
+        @textBuffer << ((c >> 12) | 0xE0)
+        @textBuffer << (((c >> 6) & 0x3F) | 0x80)
+        @textBuffer << ((c & 0x3F) | 0x80)
+      else
+        @textBuffer << ((c >> 18) | 0xF0)
+        @textBuffer << (((c >> 12) & 0x3F) | 0x80)
+        @textBuffer << (((c >> 6) & 0x3F) | 0x80)
+        @textBuffer << ((c & 0x3F) | 0x80)
       end
     else
       @textBuffer << c
@@ -614,7 +633,9 @@ private
     @name = ''
     while true do
       c = read
-      if ?; == c then
+      #puts "#{ __FILE__ }:#{ __LINE__ } CLASS OF C: #{ c.class.name }"
+      if first_byte(";") == c then
+      #if ?; == c then # 1.9.1
         break
       end
       if nil == c then
@@ -637,7 +658,7 @@ private
       else
         if nil != @resolver then
           value = @resolver.resolve(@name)
-				else
+        else
           value = resolve(@name)
         end
 
@@ -656,7 +677,7 @@ private
     @qname = readName
     @textBuffer = ''
 
-		multiple = false
+    multiple = false
     while true do
       hasWhitespace = skipWhitespace
 
@@ -678,10 +699,10 @@ private
         break
       end
 
-			if multiple and !hasWhitespace then
-				raise "whitespace is required between attributes"
-			end
-			multiple = true
+      if multiple and !hasWhitespace then
+        raise "whitespace is required between attributes"
+      end
+      multiple = true
 
       aName = readName
       @textBuffer = ''
@@ -689,18 +710,28 @@ private
         raise "name expected (start element)"
       end
 
-			skipWhitespace
+      skipWhitespace
       expect ?=
-			skipWhitespace
+      skipWhitespace
 
       delimiter = read
-      if ?' == delimiter then # for vim: '
+      #TODO optimise this
+      if "'".bytes.first == delimiter then # for vim: '
         value = parseText(?', true) # for vim: '
-      elsif ?" == delimiter then # for vim: "
+      elsif '"'.bytes.first == delimiter then # for vim: "
         value = parseText(?", true) # for vim: "
       else
         raise "invalidDelimiter"
       end
+
+      # replaced with above for 1.9.1
+      #if ?' == delimiter then # for vim: '
+      #  value = parseText(?', true) # for vim: '
+      #elsif ?" == delimiter then # for vim: "
+      #  value = parseText(?", true) # for vim: "
+      #else
+      #  raise "invalidDelimiter"
+      #end
 
       @textBuffer = ''
 
@@ -763,8 +794,8 @@ private
   def readName
     @textBuffer = ''
     if @column != @inputBuffer.index(@namePattern, @column) then
-			raise "invalid name"
-		end
+      raise "invalid name"
+    end
     if nil != $& then
       @textBuffer = $&
       @column += $&.length
@@ -865,7 +896,7 @@ private
     @elementNamespacePrefixStack.push prefixList
     @elementNamespaceValueStack.push valueList
     @elementNamespaceDefaultStack.push defaultNamespace
-    
+
     if anyQualifiedAttributes then
       # run over the attributes and make sure we have them qualified
       for i in 0..(@attributeName.length-1) do
@@ -894,10 +925,10 @@ private
     if nil == prefix then
       raise "illegalPrefix"
     end
-    if'xml' == prefix then
+    if 'xml' == prefix then
       return 'http://www.w3.org/XML/1998/namespace'
     end
-    if'xmlns' == prefix then
+    if 'xmlns' == prefix then
       return 'http://www.w3.org/2000/xmlns/'
     end
 
@@ -918,9 +949,9 @@ private
     regex = /[#{s}|<]/u
     c = findOneOfThese regex
     while (nil != c) and (delimiter != c) do
-			if ?< == c then
-				raise "illegal character '<'"
-			end
+      if ?< == c then
+        raise "illegal character '<'"
+      end
       if ?& == c then
         if !resolve then
           break
@@ -948,12 +979,12 @@ private
       p = @inputBuffer.index(@skipWhitespacePattern, @column)
 
       if nil != p then
-				foundSome = (foundSome or (@column != p))
-				@column = p
-				return foundSome
+        foundSome = (foundSome or (@column != p))
+        @column = p
+        return foundSome
       end
       getMoreInput
-			foundSome = true
+      foundSome = true
     end
     return foundSome
   end
@@ -970,11 +1001,11 @@ private
     end
     @textBuffer << @inputBuffer[@column..-1]
     getMoreInput
-		return findOneOfTheseSecond(regex)
+    return findOneOfTheseSecond(regex)
   end
 
   def findOneOfTheseSecond(regex)
-		# know we are at the first of a line
+    # know we are at the first of a line
     while nil != @inputBuffer do
       @column = @inputBuffer.index(regex)
 
