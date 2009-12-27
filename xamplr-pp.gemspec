@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bob Hutchison"]
   s.date = %q{2009-12-27}
-  s.email = %q{hutch@recursive.ca}
+  s.email = %q{hutch@xampl.com}
   s.extra_rdoc_files = [
     "LICENSE",
      "README.rdoc"
@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "COPYING",
      "LICENSE",
      "Makefile",
      "README.rdoc",

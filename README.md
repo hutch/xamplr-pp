@@ -1,9 +1,9 @@
-= xamplr-pp-gem
+# xamplr-pp-gem
 
-== INTRODUCTION
+## INTRODUCTION
 
 This is the Ruby version of the xampl pull parser, xamplr-pp.  The
-class name is xampl_PP.
+class name is Xampl_PP.
 
 Both pull parsers and SAX parsers are stream based -- they parse
 the XML file bit by bit informing its client of interesting events
@@ -13,7 +13,8 @@ SAX parsers is in where the 'main loop' is located: in the client
 for pull parsers, in the parser for SAX parsers. Clients call a
 method of the pull parser to get the next event. SAX parsers call
 methods of the client to notify it of events (so these are 'push
-parsers'). You can pass the pull parser around as an argument.
+parsers'). You can pass the pull parser around as an argument, and is
+similar to IO objects.
 
 As a way of illustrating the use of xamplr-pp a reasonably usable
 SAX-like parser (SAXish) is implemented as well. There is a saxdemo.rb
@@ -21,14 +22,16 @@ file provided that provides statistics on the parsed XML file. It
 can be run using 'make sax' (look in the Makefile to see how it is
 used)
 
-== STATUS
+## STATUS
 
-xamplr-pp  has been in daily use in a SaaS content management system since about 2004. It is an integral component of xamplr.  Unfortunately documentation is sparse.
+xamplr-pp  has been in production use in a SaaS content management system since about 2004. It is an integral component of
+xamplr.  Unfortunately documentation is sparse.
 
-xamplr-pp has passed all unit tests using Ruby 1.6.7, 1.8.6, 1.8.7 on Linux and OS X. It has not even been tried on Ruby 1.9.1 at this point.
+xamplr-pp works using Ruby 1.9.1 on OS X and Linux. It has, in the
+past, worked under Ruby 1.6.7, 1.8.6, 1.8.7 on Linux and OS X. If
+it no longer does, it will be and easy fix -- let me know.
 
-The unit tests require Lapidary (remember that?). Run these by typing 'make ut' on
-the command line in the installation directory. 
+The unit tests require Lapidary (remember that?).  No idea if they still work.
 
 xamplr-pp is not a validating parser, in fact, it
 doesn't enforce some wellformedness rules. DOCTYPE definitions are passed
@@ -37,12 +40,9 @@ to extract any kind of entity definitions from the DOCTYPE. Clever
 use of the DOCTYPE event and the resolver method can relieve this
 problem.
 
-I have some serious reservations about the way that xamplr-pp handles
-multi-byte characters, but it definitely works well with UTF8.
-
 Some attention has been paid to performance. It is reasonably quick, certainly on the fast side for pure ruby parsers.
 
-== DOCUMENTATION
+## DOCUMENTATION
 
 There isn't much. Fortunately, the API to xamplr-pp is very small
 and quite easy to understand.
@@ -57,7 +57,7 @@ SAXish is, in itself, a pretty usable SAX-like parser (of course
 the limits to validation and wellformedness checking mentioned above
 apply).
 
-== CONFORMANCE
+## CONFORMANCE
 
 Well, this is an interesting question. Right now, it doesn't do too
 well, but it does this in a 'good' way, or at least a manageable
@@ -80,15 +80,15 @@ non-enforcement of well-formedness rules. I have not looked at them
 all, I assure you of that, but it seems that this most involve
 entity definitions. Well, every one that I looked at did, can't say for what I didn't look at.
 
-== LICENCE
+## LICENCE
 
 xamplr-pp is licensed under the LGPLv3 (see LICENSE/COPYING)
 
-== CONTACT INFORMATION
+## CONTACT INFORMATION
 
-My email is hutch@xampl.com, feel free to contact me there, or
-you can use the facilities provided by Sourceforge.
+My email is hutch@xampl.com, feel free to contact me there
 
-== Copyright
+## Copyright
 
-Copyright (c) 2009 Bob Hutchison. See LICENSE for details.
+Copyright (c) 2002-2010 Bob Hutchison. See LICENSE for details.
+
