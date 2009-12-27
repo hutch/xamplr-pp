@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{xamplr-pp}
-  s.version = "1.1.4"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Bob Hutchison"]
-  s.date = %q{2009-12-13}
+  s.date = %q{2009-12-27}
   s.email = %q{hutch@recursive.ca}
   s.extra_rdoc_files = [
     "LICENSE",
@@ -33,9 +33,9 @@ Gem::Specification.new do |s|
      "lapidary-tests/TC_Parse.rb",
      "lapidary-tests/TC_Parse000.data",
      "lapidary-tests/TS_xpp.rb",
-     "lib/xampl-pp-dtd.rb",
-     "lib/xampl-pp-wf.rb",
-     "lib/xamplr-pp-18x.rb",
+     "lib/no-longer-actively-supported/xampl-pp-dtd.rb",
+     "lib/no-longer-actively-supported/xampl-pp-wf.rb",
+     "lib/no-longer-actively-supported/xamplr-pp-18x.rb",
      "lib/xamplr-pp.rb",
      "lib/xamplr-pp/ANNOUNCE.TXT",
      "lib/xamplr-pp/LICENSE",
