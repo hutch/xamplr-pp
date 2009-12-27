@@ -82,11 +82,11 @@ entity definitions. Well, every one that I looked at did, can't say for what I d
 
 == LICENCE
 
-xamplr-pp is licensed under the LGPL (see LICENSE)
+xamplr-pp is licensed under the LGPLv3 (see LICENSE/COPYING)
 
 == CONTACT INFORMATION
 
-My email is hutch@recursive.ca, feel free to contact me there, or
+My email is hutch@xampl.com, feel free to contact me there, or
 you can use the facilities provided by Sourceforge.
 
 == Copyright

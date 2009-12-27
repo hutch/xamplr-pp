@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "xamplr-pp"
     gem.summary = %Q{A pure ruby XML pull parser}
-    gem.email = "hutch@recursive.ca"
+    gem.email = "hutch@xampl.com"
     gem.homepage = "http://github.com/hutch/xamplr-pp"
     gem.authors = ["Bob Hutchison"]
 
